@@ -9,34 +9,88 @@ L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     subdomains: ['a', 'b', 'c']
 }).addTo(map);
 
-var LeafIcon = L.Icon.extend({
-    options: {
-        shadowUrl: 'leaf-shadow.png',
-        iconSize:     [38, 95],
-        shadowSize:   [50, 64],
-        iconAnchor:   [22, 94],
-        shadowAnchor: [4, 62],
-        popupAnchor:  [-3, -76]
-    }
-});
-
-var greenIcon = new LeafIcon({iconUrl: 'leaf-green.png'}),
-    redIcon = new LeafIcon({iconUrl: 'leaf-red.png'}),
-    orangeIcon = new LeafIcon({iconUrl: 'leaf-orange.png'});
-
-L.icon = function (options) {
-        return new L.Icon(options);
-};
-
-L.marker([51.5, -0.09], {icon: greenIcon}).addTo(map).bindPopup("I am a green leaf.");
-L.marker([51.495, -0.083], {icon: redIcon}).addTo(map).bindPopup("I am a red leaf.");
-L.marker([51.49, -0.1], {icon: orangeIcon}).addTo(map).bindPopup("I am an orange leaf.");
 // for ( var i=0; i < markers.length; ++i ) 
 // {
 //    L.marker( [markers[i].lat, markers[i].lng] )
 //       .bindPopup( '<a href="' + markers[i].url + '" target="_blank" rel="noopener">' + markers[i].name + '</a>' )
 //       .addTo( map );
 // }
+var route = new L.Routing.control({
+                       
+  waypoints: [
+    L.latLng(24.876902600191627, 67.03108573230874),
+    L.latLng(24.939125438326492, 67.12373179721615)
+  ],
+  routeWhileDragging: true,
+  lineOptions: {
+    styles: [{ color: 'green', opacity: 1, weight: 5 }]
+  },
+  createMarker: function (i, wp, nWps) {
+    const marker = L.marker(waypoint.latLng, {
+      draggable: true,
+      bounceOnAdd: false,
+      bounceOnAddOptions: {
+        duration: 1000,
+        height: 800,
+        function() {
+          (bindPopup(myPopup).openOn(map))
+        }
+      },
+      icon: L.icon({
+        iconUrl: '/redpin.png',
+        iconSize: [38, 95],
+        iconAnchor: [22, 94],
+        popupAnchor: [-3, -76],
+        shadowUrl: '/redpin.png',
+        shadowSize: [68, 95],
+        shadowAnchor: [22, 94]
+      })
+    });
+    return marker;
+  }
+
+}) .addTo(map).on('routesfound', function(e){
+}); 
+
+component.set("v.routeLayer",route);
+component.set("v.map2", map);  
+
+ 
+
+// L.Routing.control({
+//           waypoints: [
+//             L.latLng(36.3603179, 59.5041424),
+//             L.latLng(36.3279067, 59.5248145)
+//           ],
+//           routeWhileDragging: true,
+//           lineOptions: {
+//             styles: [{ color: 'green', opacity: 1, weight: 5 }]
+//           },
+//           createMarker: function (i: number, waypoint: any, n: number) {
+//             const marker = L.marker(waypoint.latLng, {
+//               draggable: true,
+//               bounceOnAdd: false,
+//               bounceOnAddOptions: {
+//                 duration: 1000,
+//                 height: 800,
+//                 function() {
+//                   (bindPopup(myPopup).openOn(map))
+//                 }
+//               },
+//               icon: L.icon({
+//                 iconUrl: './assets/global/img/mapmarker-red.png',
+//                 iconSize: [38, 95],
+//                 iconAnchor: [22, 94],
+//                 popupAnchor: [-3, -76],
+//                 shadowUrl: './assets/global/img/marker-shadow.png',
+//                 shadowSize: [68, 95],
+//                 shadowAnchor: [22, 94]
+//               })
+//             });
+//             return marker;
+//           }
+//         }).addTo(map);
+
 // L.Routing.control({
 //     waypoints: [
 //         L.latLng(24.876902600191627, 67.03108573230874),
