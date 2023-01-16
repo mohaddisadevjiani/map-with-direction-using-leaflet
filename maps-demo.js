@@ -17,8 +17,14 @@ L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 // }
 L.Routing.control({
     waypoints: [
-        L.latLng(57.74, 11.94),
-        L.latLng(57.6792, 11.949)
+        L.latLng(24.876902600191627, 67.03108573230874),
+        L.latLng(24.939125438326492, 67.12373179721615)
     ]
 }).addTo(map);
 
+L.Routing.control({
+    waypoints: [
+        L.latLng(24.869958726443084, 67.03467656837883),
+        L.latLng(24.856999489313626, 67.03026456376176)
+    ]
+}).addTo(map);
