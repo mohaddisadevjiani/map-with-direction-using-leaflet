@@ -63,10 +63,10 @@ for (var i = 0; i < waypoints.length; ++i) {
                     },
                     icon: L.icon({
                       iconUrl: 'redpin.png',
-                      iconSize: [18, 20],
-                      iconAnchor: [22, 94],
-                      popupAnchor: [-3, -76],
-                      shadowAnchor: [22, 94]
+                      iconSize: [18, 26],
+                    //   iconAnchor: [22, 94],
+                    //   popupAnchor: [-3, -76],
+                    //   shadowAnchor: [22, 94]
                     })
                 });
                 return marker;
