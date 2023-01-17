@@ -61,15 +61,13 @@ for (var i = 0; i < waypoints.length; ++i) {
                             (bindPopup(myPopup).openOn(map))
                         }
                     },
-                    // icon: L.icon({
-                    //   iconUrl: 'redpin.png',
-                    //   iconSize: [38, 95],
-                    //   iconAnchor: [22, 94],
-                    //   popupAnchor: [-3, -76],
-                    //   shadowUrl: 'redpin.png',
-                    //   shadowSize: [68, 95],
-                    //   shadowAnchor: [22, 94]
-                    // })
+                    icon: L.icon({
+                      iconUrl: 'redpin.png',
+                      iconSize: [18, 20],
+                      iconAnchor: [22, 94],
+                      popupAnchor: [-3, -76],
+                      shadowAnchor: [22, 94]
+                    })
                 });
                 return marker;
             }
