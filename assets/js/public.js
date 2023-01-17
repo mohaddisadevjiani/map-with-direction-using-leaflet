@@ -1,5 +1,6 @@
 window.MAP_WITH_DIRECTION_USING_LEAFLET = window.MAP_WITH_DIRECTION_USING_LEAFLET || {};
-
+// https://leafletjs.com/reference.html#map-methods-for-layers-and-controls
+// https://www.liedman.net/leaflet-routing-machine/api/#l-routing-itinerary
 (function (window, document, $, mwdul, undefined) {
     "use strict";
     var $document;
@@ -9,6 +10,14 @@ window.MAP_WITH_DIRECTION_USING_LEAFLET = window.MAP_WITH_DIRECTION_USING_LEAFLE
         mwdul.trigger("mwdul_init");
     };
     mwdul.init = function () {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(mwdul.show_map);
+        } else {
+            var map = document.getElementById("map");
+            map.innerHTML = "Geolocation is not supported by this browser.";
+        }
+    };
+    mwdul.show_map = function (position) {
         var map = L.map('map');
 
         L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -18,23 +27,32 @@ window.MAP_WITH_DIRECTION_USING_LEAFLET = window.MAP_WITH_DIRECTION_USING_LEAFLE
 
         const colors = ['blue', 'red', 'black', 'green', 'orange']; //5 colors as we have at max 5 emergency contacts
         let routes = [];
+        let waypoints = [];
 
-        let waypoints = [
-            [
-                L.latLng(24.909445897375484, 67.12201092348717),
-                L.latLng(24.939125438326492, 67.12373179721615)
-            ],
-            [
-                L.latLng(24.909445897375484, 67.12201092348717),
-                L.latLng(24.929125438326492, 67.12273179721615)
-            ]
-        ];
+        mwdul_script.waypoints.forEach((waypoint) => {
+            waypoints.push(
+                [
+                    L.latLng(position.coords.latitude, position.coords.longitude),
+                    L.latLng(waypoint.lat, waypoint.long)
+                ]
+            )
+        })
+        console.log('waypoints', waypoints)
+        // let waypoints = [
+        //     [
+        //         L.latLng(position.coords.latitude, position.coords.longitude),
+        //         L.latLng(24.939125438326492, 67.12373179721615)
+        //     ],
+        //     [
+        //         L.latLng(position.coords.latitude, position.coords.longitude),
+        //         L.latLng(24.929125438326492, 67.12273179721615)
+        //     ]
+        // ];
 
         for (var i = 0; i < waypoints.length; i++) {
 
             routes.push(
                 new L.Routing.control({
-                    id: 'test',
                     routeWhileDragging: true,
                     waypoints: waypoints[i],
                     Itinerary: {
@@ -74,7 +92,7 @@ window.MAP_WITH_DIRECTION_USING_LEAFLET = window.MAP_WITH_DIRECTION_USING_LEAFLE
                                     }
                                 },
                                 icon: L.icon({
-                                    iconUrl: 'redpin.png',
+                                    iconUrl: mwdul_script.icon,
                                     iconSize: [18, 26],
                                     // iconAnchor: [22, 94],
                                     // popupAnchor: [-3, -76],

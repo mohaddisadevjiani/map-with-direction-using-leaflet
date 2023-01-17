@@ -15,7 +15,7 @@ if (!class_exists('MAP_WITH_DIRECTION_USING_LEAFLET_SHORTCODE')) :
             }
         }
 
-        public function get_content()
+        public static function get_content()
         {
             ob_start();
             mwdul_get_template_part('content', 'map');

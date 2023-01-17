@@ -22,7 +22,7 @@ if (!function_exists('mwdul_get_template_part')) {
 
         if (!file_exists($template)) {
             /* translators: %s template */
-            _doing_it_wrong(__FUNCTION__, sprintf(__('%s does not exist.', 'business-manager'), '<code>' . $template . '</code>'), '1.0.0');
+            _doing_it_wrong(__FUNCTION__, sprintf(__('%s does not exist.', 'mwdul'), '<code>' . $template . '</code>'), '1.0.0');
             return;
         }
         load_template($template, false, $args);

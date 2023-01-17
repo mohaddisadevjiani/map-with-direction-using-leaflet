@@ -54,6 +54,30 @@ if (!class_exists('MAP_WITH_DIRECTION_USING_LEAFLET_SETUP')):
             foreach ($scripts as $name => $props) {
                 wp_register_script($name, $props['src'], $props['deps'], $props['version']);
             }
+            if(is_user_logged_in() ) {
+                $search_criteria['field_filters'][] = array('key' => 'created_by', 'value' => get_current_user_id());
+
+                $entries = GFAPI::get_entries(22, $search_criteria);
+                $waypoints = [];
+                foreach ($entries as $entry) {
+                    $email = rgar($entry, '5');
+                    if ($email) {
+                        $user = get_user_by('email', $email);
+                        if ($user) {
+                            $lat = get_field('latitude', 'user_' . $user->ID);
+                            $long = get_field('longitude', 'user_' . $user->ID);
+                            if ($lat && $long) {
+                                $waypoints[] = ['lat' => $lat, 'long' => $long];
+                            }
+                        }
+                    }
+                }
+
+                wp_localize_script('mwdul-public', 'mwdul_script', array(
+                    'icon' => MAP_WITH_DIRECTION_USING_LEAFLET_URL . '/assets/js/redpin.png',
+                    'waypoints' => $waypoints,
+                ));
+            }
         }
 
         public function public_styles()

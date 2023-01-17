@@ -3,7 +3,7 @@
 /**
  * Plugin Name:       Map with direction using Leaflet
  * Plugin URI:        https://odes.pk
- * Description:       This plugin automatically posts CE to TREC as well as sends a notification email to admin when student graduates
+ * Description:       This plugin shows map for 5 emergency contacts for a
  * Author: Shabbar Abbas
  * Author URI: shabbarabbasodes@gmail.com
  * Version: 1.0.0
@@ -26,7 +26,7 @@ final class MAP_WITH_DIRECTION_USING_LEAFLET
     protected static $_instance = null;
 
     public $version = '1.0.0';
-    public $settings;
+//    public $settings;
 
     /**
      *
@@ -87,13 +87,13 @@ final class MAP_WITH_DIRECTION_USING_LEAFLET
     {
         $locale = apply_filters('plugin_locale', get_locale(), 'mwdulp');
 
-        load_textdomain('mwdulp', WP_LANG_DIR . '/map-with-direction-using-leaflet/map-with-direction-using-leaflet-' . $locale . '.mo');
-        load_plugin_textdomain('mwdulp', false, plugin_basename(dirname(__FILE__)) . '/languages');
+//        load_textdomain('mwdulp', WP_LANG_DIR . '/map-with-direction-using-leaflet/map-with-direction-using-leaflet-' . $locale . '.mo');
+//        load_plugin_textdomain('mwdulp', false, plugin_basename(dirname(__FILE__)) . '/languages');
     }
 
     public function init()
     {
-        $this->settings = new LDGNP_Settings();
+//        $this->settings = new LDGNP_Settings();
 
         register_activation_hook(__FILE__, [$this, 'activate']);
 
