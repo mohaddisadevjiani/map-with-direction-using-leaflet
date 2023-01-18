@@ -42,24 +42,19 @@ window.MAP_WITH_DIRECTION_USING_LEAFLET = window.MAP_WITH_DIRECTION_USING_LEAFLE
         //     [
         //         L.latLng(position.coords.latitude, position.coords.longitude),
         //         L.latLng(24.939125438326492, 67.12373179721615)
-        //     ],
-        //     [
-        //         L.latLng(position.coords.latitude, position.coords.longitude),
-        //         L.latLng(24.929125438326492, 67.12273179721615)
         //     ]
         // ];
-
-        for (var i = 0; i < waypoints.length; i++) {
-
+        for (var index = 0; index < waypoints.length; index++) {
+            let emergency_contact = mwdul_script.emergency_contacts[index];
             routes.push(
                 new L.Routing.control({
                     routeWhileDragging: true,
-                    waypoints: waypoints[i],
+                    waypoints: waypoints[index],
                     Itinerary: {
                         show: false
                     },
                     lineOptions: {
-                        styles: [{color: colors[i], opacity: 1, weight: 5}],
+                        styles: [{color: colors[index], opacity: 1, weight: 5}],
                         addWaypoints: false
                     },
                     // routeLine: (r) => {
@@ -84,13 +79,13 @@ window.MAP_WITH_DIRECTION_USING_LEAFLET = window.MAP_WITH_DIRECTION_USING_LEAFLE
                             const marker = L.marker(wp.latLng, {
                                 draggable: false,
                                 bounceOnAdd: false,
-                                bounceOnAddOptions: {
-                                    duration: 1000,
-                                    height: 800,
-                                    function() {
-                                        (bindPopup(myPopup).openOn(map))
-                                    }
-                                },
+                                // bounceOnAddOptions: {
+                                //     duration: 1000,
+                                //     height: 800,
+                                // function() {
+                                //     (bindPopup(myPopup).openOn(map))
+                                // }
+                                // },
                                 icon: L.icon({
                                     iconUrl: mwdul_script.icon,
                                     iconSize: [18, 26],
@@ -100,17 +95,23 @@ window.MAP_WITH_DIRECTION_USING_LEAFLET = window.MAP_WITH_DIRECTION_USING_LEAFLE
                                     // shadowSize: [68, 95],
                                     // shadowAnchor: [22, 94]
                                 })
-                            });
-                            return marker;
+                            }).bindPopup('You', {closeOnClick: false, autoClose: false});
+                            setTimeout(() => {
+                                marker.openPopup();
+                            }, 500);
+                            return marker
                         }
-                        return L.marker(wp.latLng);
-                    }
+                        const marker = L.marker(wp.latLng).bindPopup(emergency_contact, {closeOnClick: false, autoClose: false})
+                        setTimeout(() => {
+                            marker.openPopup();
+                        }, 500);
+                        return marker;
+                    }.bind(emergency_contact)
                 })
             );
-            routes[i].addTo(map);
-            routes[i].hide();
+            routes[index].addTo(map);
+            routes[index].hide();
         }
-
     };
     mwdul.trigger = function (evtName) {
         var args = Array.prototype.slice.call(arguments, 1);

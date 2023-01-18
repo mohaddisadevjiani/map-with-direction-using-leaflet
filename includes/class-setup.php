@@ -60,6 +60,7 @@ if (!class_exists('MAP_WITH_DIRECTION_USING_LEAFLET_SETUP')):
 
                 $entries = GFAPI::get_entries(22, $search_criteria);
                 $waypoints = [];
+                $emergency_contacts = [];
                 foreach ($entries as $entry) {
                     $email = rgar($entry, '5');
                     if ($email) {
@@ -69,6 +70,7 @@ if (!class_exists('MAP_WITH_DIRECTION_USING_LEAFLET_SETUP')):
                             $long = get_field('longitude', 'user_' . $user->ID);
                             if ($lat && $long) {
                                 $waypoints[] = ['lat' => $lat, 'long' => $long]; //'name' => $user->display_name
+                                $emergency_contacts[] = $user->display_name;
                             }
                         }
                     }
@@ -77,6 +79,7 @@ if (!class_exists('MAP_WITH_DIRECTION_USING_LEAFLET_SETUP')):
                 wp_localize_script('mwdul-public', 'mwdul_script', array(
                     'icon' => MAP_WITH_DIRECTION_USING_LEAFLET_URL . '/assets/js/redpin.png',
                     'waypoints' => $waypoints,
+                    'emergency_contacts' => $emergency_contacts
                 ));
             }
         }
