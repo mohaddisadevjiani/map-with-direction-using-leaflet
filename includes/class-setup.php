@@ -56,6 +56,7 @@ if (!class_exists('MAP_WITH_DIRECTION_USING_LEAFLET_SETUP')):
             }
             if(is_user_logged_in() ) {
                 $search_criteria['field_filters'][] = array('key' => 'created_by', 'value' => get_current_user_id());
+                //$search_criteria['status'] = 'active'; //check to see if only active entries working from
 
                 $entries = GFAPI::get_entries(22, $search_criteria);
                 $waypoints = [];
@@ -67,7 +68,7 @@ if (!class_exists('MAP_WITH_DIRECTION_USING_LEAFLET_SETUP')):
                             $lat = get_field('latitude', 'user_' . $user->ID);
                             $long = get_field('longitude', 'user_' . $user->ID);
                             if ($lat && $long) {
-                                $waypoints[] = ['lat' => $lat, 'long' => $long];
+                                $waypoints[] = ['lat' => $lat, 'long' => $long]; //'name' => $user->display_name
                             }
                         }
                     }

@@ -37,7 +37,7 @@ window.MAP_WITH_DIRECTION_USING_LEAFLET = window.MAP_WITH_DIRECTION_USING_LEAFLE
                 ]
             )
         })
-        console.log('waypoints', waypoints)
+        // console.log('waypoints', waypoints)
         // let waypoints = [
         //     [
         //         L.latLng(position.coords.latitude, position.coords.longitude),
